@@ -1,0 +1,34 @@
+name: Test manifest
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: windows-2022
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Scoop
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
+          .\install.ps1 -RunAsAdmin
+          "$HOME\scoop\shims" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Install from this checkout and convert
+        shell: pwsh
+        run: |
+          scoop bucket add local "$PWD"
+          scoop install local/filee-cli
+          filee-cli version
+          Set-Content in.md "# Hello`n`nfilee-cli test"
+          filee-cli convert in.md --to html
+          if (-not (Select-String -Path in.html -Pattern 'filee-cli test' -Quiet)) { throw 'conversion output missing' }

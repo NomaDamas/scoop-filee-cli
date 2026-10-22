@@ -1,0 +1,38 @@
+{
+    "version": "2.0.0-1",
+    "description": "Unofficial CLI-only build of Filee: offline file converter for 255 formats, engines bundled",
+    "homepage": "https://github.com/NomaDamas/filee-cli",
+    "license": {
+        "identifier": "MIT,GPL-3.0-or-later,AGPL-3.0-or-later,LGPL-2.1-or-later,MPL-2.0",
+        "url": "https://github.com/NomaDamas/filee-cli/blob/main/LICENSE"
+    },
+    "notes": [
+        "Unofficial redistribution of Filee's command line; not made or endorsed by its author.",
+        "About 900 MB with the bundled engines. Their sources are release assets of NomaDamas/filee-cli.",
+        "Try: filee-cli formats    filee-cli convert photo.heic --to jpg"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/NomaDamas/filee-cli/releases/download/v2.0.0-1/filee-cli-2.0.0-1-win-x64.zip",
+            "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "extract_dir": "filee-cli-2.0.0-1-win-x64"
+        }
+    },
+    "bin": "filee-cli.exe",
+    "checkver": {
+        "github": "https://github.com/NomaDamas/filee-cli",
+        "regex": "v(\\d+\\.\\d+\\.\\d+-\\d+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/NomaDamas/filee-cli/releases/download/v$version/filee-cli-$version-win-x64.zip",
+                "extract_dir": "filee-cli-$version-win-x64"
+            }
+        },
+        "hash": {
+            "url": "https://github.com/NomaDamas/filee-cli/releases/download/v$version/SHA256SUMS",
+            "regex": "$sha256\\s+filee-cli-$version-win-x64\\.zip"
+        }
+    }
+}

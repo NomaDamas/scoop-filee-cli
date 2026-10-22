@@ -1,0 +1,47 @@
+name: Update manifest
+
+# Scoop's own checkver and autoupdate find a newer release of NomaDamas/filee-cli and rewrite bucket/filee-cli.json
+# (version, URL and the hash from the release's SHA256SUMS). Uses only the job's GITHUB_TOKEN.
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+      - name: Install Scoop
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Uri https://get.scoop.sh -OutFile install.ps1
+          .\install.ps1 -RunAsAdmin
+          "$HOME\scoop\shims" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: checkver -Update
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          $scoop = (scoop prefix scoop)
+          & "$scoop\bin\checkver.ps1" -App filee-cli -Dir "$PWD\bucket" -Update
+          git diff --stat
+      - name: Commit when changed
+        shell: bash
+        run: |
+          if git diff --quiet; then echo "manifest already current"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "filee-cli $(python3 -c "import json;print(json.load(open('bucket/filee-cli.json'))['version'])")"
+          git push
