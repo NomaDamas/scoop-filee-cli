@@ -14,7 +14,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/NomaDamas/filee-cli/releases/download/v2.0.0-1/filee-cli-2.0.0-1-win-x64.zip",
-            "hash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "hash": "7b9b9dee2876896c5af16f1fb2ec53befc13cf15685f78f0fe6d0983ee6f47aa",
             "extract_dir": "filee-cli-2.0.0-1-win-x64"
         }
     },
