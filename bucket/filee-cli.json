@@ -1,5 +1,5 @@
 {
-    "version": "2.0.0-1",
+    "version": "2.0.0-2",
     "description": "Unofficial CLI-only build of Filee: offline file converter for 255 formats, engines bundled",
     "homepage": "https://github.com/NomaDamas/filee-cli",
     "license": {
@@ -13,9 +13,9 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/NomaDamas/filee-cli/releases/download/v2.0.0-1/filee-cli-2.0.0-1-win-x64.zip",
-            "hash": "7b9b9dee2876896c5af16f1fb2ec53befc13cf15685f78f0fe6d0983ee6f47aa",
-            "extract_dir": "filee-cli-2.0.0-1-win-x64"
+            "url": "https://github.com/NomaDamas/filee-cli/releases/download/v2.0.0-2/filee-cli-2.0.0-2-win-x64.zip",
+            "hash": "cc42f978dafedb722e10e0ffbf54de51c0abe1da4c0d8e641c9265235ad2d674",
+            "extract_dir": "filee-cli-2.0.0-2-win-x64"
         }
     },
     "bin": "filee-cli.exe",
