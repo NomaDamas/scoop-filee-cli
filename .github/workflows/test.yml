@@ -26,9 +26,11 @@ jobs:
       - name: Install from this checkout and convert
         shell: pwsh
         run: |
-          scoop bucket add local "$PWD"
-          scoop install local/filee-cli
+          scoop install "$PWD\bucket\filee-cli.json"
+          scoop list
           filee-cli version
           Set-Content in.md "# Hello`n`nfilee-cli test"
           filee-cli convert in.md --to html
           if (-not (Select-String -Path in.html -Pattern 'filee-cli test' -Quiet)) { throw 'conversion output missing' }
+          filee-cli convert in.md --to hwpx
+          if (-not (Test-Path in.hwpx)) { throw 'hwpx missing' }
