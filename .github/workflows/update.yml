@@ -4,6 +4,10 @@ name: Update manifest
 # (version, URL and the hash from the release's SHA256SUMS). Uses only the job's GITHUB_TOKEN.
 
 on:
+  # The release workflow of NomaDamas/filee-cli pushes a tag `release-<version>` here (with a deploy key that can write
+  # to this repository only) the moment it publishes a release. The schedule is the fallback.
+  push:
+    tags: ['release-*']
   schedule:
     - cron: '23 */6 * * *'
   workflow_dispatch:
@@ -22,6 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: main
           persist-credentials: true
       - name: Install Scoop
         shell: pwsh
